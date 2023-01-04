@@ -1,6 +1,7 @@
 # miketysonbot
 A Discord Bot Nicknamed Mike Tyson 
 
-The main folder for the bot is bot.py, anything marked feature was functionality that was expirimented with before being wrapped into bot.py. Please check out all issues to see any outline problems or recent updates with MikeTyson bot. 
+The main program is miketyson.py, additional branches are expirimental features and may or may not be functional. This is mostly a hobby or test project for our group Discord any contributions are welcome. 
+
 
 To run this bot you must have a .env file with your Discord Token as well as your Guild Token
