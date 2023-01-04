@@ -24,8 +24,12 @@ async def on_ready():
 async def on_message(message):
     await bot.process_commands(message)
 
-    if message.content == "fightclub":
+    if message.author == bot.user:
+        return
+
+    if "fightclub" in message.content:
         await message.reply("Hey man don't talk about fightclub")
+
 
     # responds w/ first rule of fightclub if found in message
 
