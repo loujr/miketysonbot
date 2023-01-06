@@ -30,18 +30,26 @@ async def on_message(message):
     if "fightclub" in message.content:
         await message.reply("Hey man don't talk about fightclub")
 
-
     # responds w/ first rule of fightclub if found in message
+
+
+    if "lou" in message.content:
+        await message.reply("That's my boy right there")
+
+    # responds w/ thats my boy right there if lou is found in message
+
 
 
 @bot.command()
 async def tableflip(ctx):
     await ctx.send("(╯°□°)╯︵ ┻━┻")
 
+    # .tableflip
 
 @bot.command()
 async def ping(ctx):
     await ctx.send("pong")
 
+    # .pong
 
 bot.run(TOKEN)
