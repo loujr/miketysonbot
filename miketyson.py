@@ -4,6 +4,7 @@ import os
 import discord
 from discord.ext import commands
 from dotenv import load_dotenv
+import re # regex
 
 load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
@@ -26,8 +27,10 @@ async def on_message(message):
 
     if message.author == bot.user:
         return
+    # prevents bot from responding to itself
 
-    if "fightclub" in message.content:
+    FC = re.compile("fight\s*club", re.IGNORECASE)
+    if FC.search(message.content):
         await message.reply("Hey man don't talk about fightclub")
 
     # responds w/ first rule of fightclub if found in message
