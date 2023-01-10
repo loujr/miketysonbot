@@ -35,12 +35,11 @@ async def on_message(message):
 
     # responds w/ first rule of fightclub if found in message
 
-
-    if "lou" in message.content:
+    LOU = re.compile(r"\blou\b", re.IGNORECASE)
+    if LOU.search(message.content):
         await message.reply("That's my boy right there")
 
     # responds w/ thats my boy right there if lou is found in message
-
 
 
 @bot.command()
