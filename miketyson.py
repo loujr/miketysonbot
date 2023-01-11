@@ -8,11 +8,11 @@ import re  # regex
 import requests
 import json
 
+
 load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
 GUILD = os.getenv("DISCORD_GUILD")
 RAPIDAPI_TOKEN = os.getenv("RAPIDAPI_TOKEN")
-
 # tokens and api keys are stored in .env file
 
 intents = discord.Intents.all()
