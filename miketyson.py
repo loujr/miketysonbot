@@ -3,7 +3,7 @@ import os
 
 import discord  # discord.py
 from discord.ext import commands
-from dotenv import load_dotenv
+from dotenv import load_dotenv #python-dotenv
 import re  # regex
 import requests
 import json
@@ -68,7 +68,7 @@ async def stonk(ctx, arg):
     # volume = result["regularMarketVolume"]
 
     embed = discord.Embed(title=name, color=0x15DBC7)
-    embed.add_field(name="Ticker", value=ticker, inline=False)
+    embed.add_field(name="Ticker:", value=ticker, inline=False)
     embed.add_field(name="Open:", value=market_open, inline=False)
     embed.add_field(name="Current:", value=current_market_price, inline=False)
     embed.add_field(name="Change:", value=pretty_percent_change, inline=False)
