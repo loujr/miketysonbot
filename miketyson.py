@@ -59,16 +59,20 @@ async def stonk(ctx, arg):
     result = data["quoteResponse"]["result"][0]
     name = result["longName"]
     ticker = result["symbol"]
+    market_open = result["regularMarketOpen"]
     current_market_price = result["regularMarketPrice"]
-    market_high = result["regularMarketDayHigh"]
-    market_low = result["regularMarketDayLow"]
-    market_cap = result["marketCap"]
-    volume = result["regularMarketVolume"]
+    percent_change = result["regularMarketChangePercent"]
+    pretty_percent_change = "{:.2f}%".format(percent_change)
+    # market_high = result["regularMarketDayHigh"]
+    # market_low = result["regularMarketDayLow"]
+    # market_cap = result["marketCap"]
+    # volume = result["regularMarketVolume"]
 
     embed = discord.Embed(title=name, color=0x15DBC7)
     embed.add_field(name="Ticker", value=ticker, inline=False)
-    embed.add_field(name="High", value=market_high, inline=False)
-    embed.add_field(name="Low", value=market_low, inline=False)
+    embed.add_field(name="Open:", value=market_open, inline=False)
+    embed.add_field(name="Current:", value=current_market_price, inline=False)
+    embed.add_field(name="Change:", value=pretty_percent_change, inline=False)
     await ctx.send(embed=embed)
 
     # .stonk <ticker>   returns stonk chart
