@@ -4,9 +4,13 @@ import os
 import discord  # discord.py
 from discord.ext import commands
 from dotenv import load_dotenv #python-dotenv
-from PIL import Image # pillow
-import urllib.request # urllib
-import tempfile # tempfile
+
+#from PIL import Image # pillow
+#import urllib.request # urllib
+#import tempfile # tempfile
+import io
+import aiohttp 
+
 import re  # regex
 import requests
 import json
@@ -89,7 +93,6 @@ async def weather(ctx, arg):
         }
     response = requests.request("GET", url, headers=headers, params=querystring)
     data = response.json()
-
     result_location = data["location"]
     result_current = data["current"]
     pretty_location = result_location["name"]
@@ -98,10 +101,45 @@ async def weather(ctx, arg):
 
     icon = result_condition["icon"]
     format_icon = icon.replace("//", "https://")
-    embeded = discord.Embed()
-    embeded.set_image(url=format_icon)
-    img = embeded
-    
+
+#    async def get_image(url):
+#        async with ClientSession() as session:
+#            await async with session.get(url) as resp:
+#                discord.File(resp, 'image.png')
+
+#    async def get_image(url):
+#        async with aiohttp.ClientSession() as session:
+#            async with session.get(url) as resp:
+#                if resp.status != 200:
+#                    return await ctx.send('Could not download file...')
+#                data = io.BytesIO(await resp.read())
+
+
+
+
+#    discord.File(format_icon, filename="image.png")
+#    file = discord.File("image.png")
+
+#    img_data = requests.get(format_icon).content
+#    with open('image.png', 'wb') as handler:
+#        file = discord.File(img_data, filename="image.png")
+
+
+
+
+#    async with aiohttp.ClientSession() as session:
+#        async with session.get(format_icon) as resp:
+#            if resp.status != 200:
+#                return await ctx.send('Could not download file...')
+#            data = io.BytesIO(await resp.read())
+#            await ctx.send(file=discord.File(data, 'image.png'))
+
+
+    #embeded = discord.Embed(title="Weather", color=0x15DBC7)
+    #embeded = embeded.set_image(url=format_icon)
+
+
+
     #urllib.request.urlretrieve(format_icon, "image.png")
     #with Image.open("image.png") as img:
         #file = discord.File(format_icon, filename="image.png")
@@ -110,7 +148,7 @@ async def weather(ctx, arg):
 
     current_tempf = result_current["temp_f"]  
     current_tempc = result_current["temp_c"]
-    forcast = f"> The current temperature in {pretty_location} is {current_tempf} °F / {current_tempc} °C \n> The current forcast is {result_condition['text']} {img}"
+    forcast = f"> The current temperature in {pretty_location} is {current_tempf} °F / {current_tempc} °C \n> The current forcast is {result_condition['text']} {get_image(format_icon)}"
     await ctx.send(forcast)
     # .weather <location>   returns current weather
 
