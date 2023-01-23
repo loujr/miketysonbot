@@ -99,8 +99,8 @@ async def weather(ctx, arg):
     result_condition = data["current"]["condition"]
     
 
-    icon = result_condition["icon"]
-    format_icon = icon.replace("//", "https://")
+#    icon = result_condition["icon"]
+#    format_icon = icon.replace("//", "https://")
 
 #    async def get_image(url):
 #        async with ClientSession() as session:
@@ -135,22 +135,23 @@ async def weather(ctx, arg):
 #            await ctx.send(file=discord.File(data, 'image.png'))
 
 
-    #embeded = discord.Embed(title="Weather", color=0x15DBC7)
-    #embeded = embeded.set_image(url=format_icon)
+#    embeded = discord.Embed(title="Weather", color=0x15DBC7)
+#    embeded = embeded.set_image(url=format_icon)
 
 
 
-    #urllib.request.urlretrieve(format_icon, "image.png")
-    #with Image.open("image.png") as img:
-        #file = discord.File(format_icon, filename="image.png")
-        #await ctx.send(file=file)
+#    urllib.request.urlretrieve(format_icon, "image.png")
+#    with Image.open("image.png") as img:
+#        file = discord.File(format_icon, filename="image.png")
+#        await ctx.send(file=file)
 
 
     current_tempf = result_current["temp_f"]  
     current_tempc = result_current["temp_c"]
-    forcast = f"> The current temperature in {pretty_location} is {current_tempf} °F / {current_tempc} °C \n> The current forcast is {result_condition['text']} {get_image(format_icon)}"
+    forcast = f"> The current temperature in {pretty_location} is {current_tempf} °F / {current_tempc} °C. The current forcast is {result_condition['text']}."
+#   forcast = f"> The current temperature in {pretty_location} is {current_tempf} °F / {current_tempc} °C \n> The current forcast is {result_condition['text']} {get_image(format_icon)}"
     await ctx.send(forcast)
-    # .weather <location>   returns current weather
+     #.weather <location>   returns current weather
 
 
 @bot.command()
