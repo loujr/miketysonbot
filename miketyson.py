@@ -4,6 +4,9 @@ import os
 import discord  # discord.py
 from discord.ext import commands
 from dotenv import load_dotenv #python-dotenv
+from PIL import Image # pillow
+import urllib.request # urllib
+import tempfile # tempfile
 import re  # regex
 import requests
 import json
@@ -74,6 +77,40 @@ async def stonk(ctx, arg):
     embed.add_field(name="Change:", value=pretty_percent_change, inline=False)
     await ctx.send(embed=embed)
     # .stonk <ticker>   returns stonk chart
+
+@bot.command(pass_context=True)
+async def weather(ctx, arg):
+    place = arg
+    url = "https://weatherapi-com.p.rapidapi.com/current.json"
+    querystring = {"q": place.format(str)}
+    headers = {
+        "x-rapidapi-key": RAPIDAPI_TOKEN,
+        "x-rapidapi-host": "weatherapi-com.p.rapidapi.com"
+        }
+    response = requests.request("GET", url, headers=headers, params=querystring)
+    data = response.json()
+
+    result_location = data["location"]
+    result_current = data["current"]
+    result_condition = data["current"]["condition"]
+    pretty_location = result_location["name"]
+
+    icon = result_condition["icon"]
+    format_icon = icon.replace("//", "https://")
+
+    urllib.request.urlretrieve(format_icon, "image.png")
+    with Image.open("image.png") as img:
+        with tempfile.NamedTemporaryFile(suffix=".png") as fp:
+            img.save(fp, "PNG")
+            fp.seek(0)
+            img = discord.File(fp, filename="icon.png")
+
+
+    current_tempf = result_current["temp_f"]  
+    current_tempc = result_current["temp_c"]
+    forcast = f"> The current temperature in {pretty_location} is {current_tempf} °F / {current_tempc} °C \n> {result_condition['text']} {img}"
+    await ctx.send(forcast)
+    # .weather <location>   returns current weather
 
 
 @bot.command()
