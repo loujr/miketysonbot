@@ -92,23 +92,25 @@ async def weather(ctx, arg):
 
     result_location = data["location"]
     result_current = data["current"]
-    result_condition = data["current"]["condition"]
     pretty_location = result_location["name"]
+    result_condition = data["current"]["condition"]
+    
 
     icon = result_condition["icon"]
     format_icon = icon.replace("//", "https://")
-
-    urllib.request.urlretrieve(format_icon, "image.png")
-    with Image.open("image.png") as img:
-        with tempfile.NamedTemporaryFile(suffix=".png") as fp:
-            img.save(fp, "PNG")
-            fp.seek(0)
-            img = discord.File(fp, filename="icon.png")
+    embeded = discord.Embed()
+    embeded.set_image(url=format_icon)
+    img = embeded
+    
+    #urllib.request.urlretrieve(format_icon, "image.png")
+    #with Image.open("image.png") as img:
+        #file = discord.File(format_icon, filename="image.png")
+        #await ctx.send(file=file)
 
 
     current_tempf = result_current["temp_f"]  
     current_tempc = result_current["temp_c"]
-    forcast = f"> The current temperature in {pretty_location} is {current_tempf} °F / {current_tempc} °C \n> {result_condition['text']} {img}"
+    forcast = f"> The current temperature in {pretty_location} is {current_tempf} °F / {current_tempc} °C \n> The current forcast is {result_condition['text']} {img}"
     await ctx.send(forcast)
     # .weather <location>   returns current weather
 
@@ -126,5 +128,3 @@ async def ping(ctx):
 
 
 bot.run(TOKEN)
-
-#test comment
