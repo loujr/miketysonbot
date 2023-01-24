@@ -102,7 +102,7 @@ async def weather(ctx, arg):
     pretty_tempc = "{:.0f} °C".format(current_tempc)  # rounds to nearest whole number
 
     forcast = (f"> The current temperature in {pretty_location} is " 
-            f"{pretty_tempf} °F / {pretty_tempc} °C. The current forcast "
+            f"{pretty_tempf} / {pretty_tempc}. The current forcast "
             f"is {pretty_w_forcast}.")
 
     await ctx.send(forcast)
