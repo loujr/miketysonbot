@@ -96,7 +96,7 @@ async def weather(ctx, arg):
     current_tempc = result_current["temp_c"]
 
     forcast = (f"> The current temperature in {pretty_location} is " 
-            f"{current_tempf} °F / {current_tempc} °C.  The current forcast "
+            f"{current_tempf} °F / {current_tempc} °C. The current forcast "
             f"is {result_condition['text']}.")
 
     await ctx.send(forcast)
