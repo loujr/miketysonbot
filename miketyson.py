@@ -97,13 +97,15 @@ async def weather(ctx, arg):
     pretty_w_forcast = w_forcast.lower()
 
     current_tempf = result_current["temp_f"]
-    pretty_tempf = "{:.0f} °F".format(current_tempf)  # rounds to nearest whole number
+    pretty_tempf = "{:.0f} °F".format(current_tempf)  
+    # rounds to nearest whole number
     current_tempc = result_current["temp_c"]
-    pretty_tempc = "{:.0f} °C".format(current_tempc)  # rounds to nearest whole number
+    pretty_tempc = "{:.0f} °C".format(current_tempc)  
+    # rounds to nearest whole number
 
     forcast = (f"> The current temperature in {pretty_location} is " 
-            f"{pretty_tempf} / {pretty_tempc}. The current forcast "
-            f"is {pretty_w_forcast}.")
+        f"{pretty_tempf} / {pretty_tempc}. The current forcast "
+        f"is _{pretty_w_forcast}_, {result_current['humidity'] }% humidity.")
 
     await ctx.send(forcast)
 
