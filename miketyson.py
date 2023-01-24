@@ -73,7 +73,7 @@ async def stonk(ctx, arg):
     embed.add_field(name="Current:", value=current_market_price, inline=False)
     embed.add_field(name="Change:", value=pretty_percent_change, inline=False)
     await ctx.send(embed=embed)
-    # .stonk <ticker>   returns stonk chart
+    # .stonk <ticker> returns stonk chart
 
 @bot.command(pass_context=True)
 async def weather(ctx, arg):
@@ -101,7 +101,7 @@ async def weather(ctx, arg):
 
     await ctx.send(forcast)
 
-    # .weather <location>   returns current weather
+    # .weather <location> returns current weather
 
 
 @bot.command()
