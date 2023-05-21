@@ -1,12 +1,12 @@
 # Mike Tyson as a Service
 
+
 import os
 import discord  # discord.py
 from discord.ext import commands
 from dotenv import load_dotenv #python-dotenv
 import re  # regex
 import requests
-import json
 
 
 load_dotenv()
@@ -110,6 +110,15 @@ async def weather(ctx, arg):
     await ctx.send(forcast)
 
     # .weather <location> returns current weather
+
+@bot.command(pass_context=True)
+async def cat(ctx, arg):
+    number = arg
+    url = (f"http://http.cat/{number}.jpg")
+    
+    await ctx.send(url)
+
+
 
 
 @bot.command()
