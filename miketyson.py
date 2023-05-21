@@ -112,7 +112,7 @@ async def weather(ctx, arg):
     # .weather <location> returns current weather
 
 @bot.command(pass_context=True)
-async def cat(ctx, arg):
+async def http(ctx, arg):
     number = arg
     url = (f"http://http.cat/{number}.jpg")
     
