@@ -1,12 +1,12 @@
 # Mike Tyson as a Service
 
+
 import os
 import discord  # discord.py
 from discord.ext import commands
 from dotenv import load_dotenv #python-dotenv
 import re  # regex
 import requests
-import json
 
 
 load_dotenv()
@@ -92,16 +92,33 @@ async def weather(ctx, arg):
     result_current = data["current"]
     pretty_location = result_location["name"]
     result_condition = data["current"]["condition"]
-    current_tempf = result_current["temp_f"]  
+    
+    w_forcast = result_condition["text"]
+    pretty_w_forcast = w_forcast.lower()
+
+    current_tempf = result_current["temp_f"]
+    pretty_tempf = "{:.0f} °F".format(current_tempf)  
+    # rounds to nearest whole number
     current_tempc = result_current["temp_c"]
+    pretty_tempc = "{:.0f} °C".format(current_tempc)  
+    # rounds to nearest whole number
 
     forcast = (f"> The current temperature in {pretty_location} is " 
-            f"{current_tempf} °F / {current_tempc} °C.  The current forcast "
-            f"is {result_condition['text']}.")
+        f"{pretty_tempf} / {pretty_tempc}. The current forcast "
+        f"is _{pretty_w_forcast}_, {result_current['humidity'] }% humidity.")
 
     await ctx.send(forcast)
 
     # .weather <location> returns current weather
+
+@bot.command(pass_context=True)
+async def cat(ctx, arg):
+    number = arg
+    url = (f"http://http.cat/{number}.jpg")
+    
+    await ctx.send(url)
+
+
 
 
 @bot.command()
