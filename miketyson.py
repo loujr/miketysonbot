@@ -112,6 +112,21 @@ async def weather(ctx, arg):
     # .weather <location> returns current weather
 
 @bot.command(pass_context=True)
+async def forecast(ctx, arg):
+    place = arg
+    url = "https://weatherapi-com.p.rapidapi.com/forecast.json"
+    querystring = {"q": place.format(str),"days":"3"}
+    headers = {
+        "x-rapidapi-key": RAPIDAPI_TOKEN,
+        "x-rapidapi-host": "weatherapi-com.p.rapidapi.com"
+        }
+
+    response = requests.get(url, headers=headers, params=querystring)
+
+print(response.json())
+    
+
+@bot.command(pass_context=True)
 async def http(ctx, arg):
     number = arg
     url = (f"http://http.cat/{number}.jpg")
