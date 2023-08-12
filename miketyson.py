@@ -140,6 +140,8 @@ async def http(ctx, arg):
         await ctx.send("Invalid HTTP status code")
     # .http <status code> returns http.cat image
     
+@bot.command()
+async def tableflip(ctx):
     await ctx.send("(╯°□°)╯︵ ┻━┻")
     # .tableflip
 
