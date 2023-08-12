@@ -118,14 +118,15 @@ async def http(ctx, arg):
     
     await ctx.send(url)
 
-
-
-
 @bot.command()
 async def tableflip(ctx):
     await ctx.send("(╯°□°)╯︵ ┻━┻")
     # .tableflip
 
+@bot.command()
+async def fingerguns(ctx):
+    await ctx.send("(☞ﾟヮﾟ)☞")
+    # .fingerguns
 
 @bot.command()
 async def ping(ctx):
