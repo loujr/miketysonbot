@@ -115,11 +115,31 @@ async def weather(ctx, arg):
 async def http(ctx, arg):
     number = arg
     url = (f"http://http.cat/{number}.jpg")
-    
-    await ctx.send(url)
 
-@bot.command()
-async def tableflip(ctx):
+    if (number == "100" or number == "101" or number == "102" or number == "103" or
+        number == "200" or number == "201" or number == "202" or number == "203" or
+        number == "204" or number == "206" or number == "207" or number == "300" or
+        number == "301" or number == "302" or number == "303" or number == "304" or
+        number == "305" or number == "307" or number == "308" or number == "400" or
+        number == "401" or number == "402" or number == "403" or number == "404" or
+        number == "405" or number == "406" or number == "407" or number == "408" or
+        number == "409" or number == "410" or number == "411" or number == "412" or
+        number == "413" or number == "414" or number == "415" or number == "416" or
+        number == "417" or number == "418" or number == "420" or number == "421" or
+        number == "422" or number == "423" or number == "424" or number == "425" or
+        number == "426" or number == "428" or number == "429" or number == "431" or
+        number == "444" or number == "450" or number == "451" or number == "497" or
+        number == "498" or number == "499" or number == "500" or number == "501" or
+        number == "502" or number == "503" or number == "504" or number == "505" or
+        number == "506" or number == "507" or number == "508" or number == "509" or
+        number == "510" or number == "511" or number == "521" or number == "522" or
+        number == "523" or number == "525" or number == "530" or number == "598"):
+        # checks if number is valid http status code
+        await ctx.send(url)
+    else:
+        await ctx.send("Invalid HTTP status code")
+    # .http <status code> returns http.cat image
+    
     await ctx.send("(╯°□°)╯︵ ┻━┻")
     # .tableflip
 
