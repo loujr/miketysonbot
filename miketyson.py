@@ -141,6 +141,15 @@ async def http(ctx, arg):
     # .http <status code> returns http.cat image
     
 @bot.command()
+async def whoami(ctx, *args):
+    if ctx.message.author.guild_permissions.administrator:
+        await ctx.send(f"You're an admin {ctx.message.author.mention}") 
+    else:
+        await ctx.send(f"You're not an admin {ctx.message.author.mention}")
+
+    # .whoami returns if user is admin
+    
+@bot.command()
 async def tableflip(ctx):
     await ctx.send("(╯°□°)╯︵ ┻━┻")
     # .tableflip
