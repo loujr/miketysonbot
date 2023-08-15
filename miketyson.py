@@ -43,6 +43,18 @@ async def on_message(message):
         await message.reply("That's my boy right there")
     # responds w/ thats my boy right there if lou is found in message
 
+    ILUM = re.compile(r"I love you mike", re.IGNORECASE)
+    if ILUM.search(message.content):
+        if message.author.guild_permissions.administrator:
+            await message.reply("Awh man you're the best :relaxed:")
+        else:
+            await message.reply("Who is this clown?")
+    # responds w/ i love you too if i love you mike is found in message
+
+    if message.content == "raise-exception":
+        raise discord.DiscordException
+    # raises exception if message is raise-exception
+
 
 @bot.command(pass_context=True)
 async def stonk(ctx, arg):
