@@ -160,6 +160,12 @@ async def whoami(ctx, *args):
         await ctx.send(f"You're not an admin {ctx.message.author.mention}")
 
     # .whoami returns if user is admin
+
+@bot.command()
+async def punchme(ctx):
+    dmuser = await bot.fetch_user(ctx.message.author.id)
+    await dmuser.send("https://giphy.com/gifs/AnXBiWSsDndBu")
+    # .punchme
     
 @bot.command()
 async def tableflip(ctx):
