@@ -163,8 +163,11 @@ async def whoami(ctx, *args):
 
 @bot.command()
 async def punchme(ctx):
-    dmuser = await bot.fetch_user(ctx.message.author.id)
+    dmuser = await ctx.fetch_user(ctx.message.author.id)
+    invite = await ctx.channel.create_invite(max_age=300)
     await dmuser.send("https://giphy.com/gifs/AnXBiWSsDndBu")
+    await dmuser.send(invite)
+    await ctx.send(":punch:")
     # .punchme
     
 @bot.command()
