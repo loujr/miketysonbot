@@ -7,6 +7,7 @@ from discord.ext import commands
 from dotenv import load_dotenv #python-dotenv
 import re  # regex
 import requests
+import time
 
 
 load_dotenv()
@@ -160,6 +161,20 @@ async def whoami(ctx, *args):
         await ctx.send(f"You're not an admin {ctx.message.author.mention}")
 
     # .whoami returns if user is admin
+
+@bot.command()
+async def punchme(ctx):
+    if ctx.message.author.guild_permissions.administrator:
+        await ctx.send(f"Nah {ctx.message.author.mention}, I can't punch you, you're family")
+    else:
+        await ctx.send(":punch:")
+        await ctx.send(f"{ctx.message.author.mention} has been kicked")
+        dmuser = await ctx.message.author.create_dm()
+        invite = await ctx.channel.create_invite(max_age=300, max_uses=1, unique=True)
+        await dmuser.send("https://giphy.com/gifs/AnXBiWSsDndBu")
+        await dmuser.send(invite)
+        await ctx.message.author.kick()
+    # .punchme
     
 @bot.command()
 async def tableflip(ctx):
