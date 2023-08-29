@@ -182,6 +182,11 @@ async def tableflip(ctx):
     # .tableflip
 
 @bot.command()
+async def gotem(ctx):
+    await ctx.send("https://giphy.com/gifs/iOm1xOSfAtPzmPXJqH")
+    # .gotem
+
+@bot.command()
 async def fingerguns(ctx):
     await ctx.send("(☞ﾟヮﾟ)☞")
     # .fingerguns
