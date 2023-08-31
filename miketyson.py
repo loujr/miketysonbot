@@ -7,14 +7,13 @@ from discord.ext import commands
 from dotenv import load_dotenv #python-dotenv
 import re  # regex
 import requests
-import time
 
 
 load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
 GUILD = os.getenv("DISCORD_GUILD")
 RAPIDAPI_TOKEN = os.getenv("RAPIDAPI_TOKEN")
-# tokens and api keys are stored in .env file
+    # tokens and api keys are stored in .env file
 
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix=".", intents=intents)
@@ -40,13 +39,15 @@ async def on_message(message):
     # responds w/ first rule of fightclub if found in message
 
     LOU = re.compile(r"\blou\b", re.IGNORECASE)
+    if discord.utils.get(message.author.roles, name="root"):
+        pass
     if LOU.search(message.content):
         await message.reply("That's my boy right there")
     # responds w/ thats my boy right there if lou is found in message
 
     ILUM = re.compile(r"I love you mike", re.IGNORECASE)
     if ILUM.search(message.content):
-        if message.author.guild_permissions.administrator:
+        if discord.utils.get(message.author.roles, name="root"):
             await message.reply("Awh man you're the best :relaxed:")
         else:
             await message.reply("Who is this clown?")
@@ -147,21 +148,12 @@ async def http(ctx, arg):
         number == "506" or number == "507" or number == "508" or number == "509" or
         number == "510" or number == "511" or number == "521" or number == "522" or
         number == "523" or number == "525" or number == "530" or number == "598"):
-        # checks if number is valid http status code
+    # checks if number is valid http status code
         await ctx.send(url)
     else:
         await ctx.send("Invalid HTTP status code")
     # .http <status code> returns http.cat image
     
-#@bot.command()
-#async def whoami(ctx, *args):
-#    if ctx.message.author.guild_permissions.administrator:
-#        await ctx.send(f"You're an admin {ctx.message.author.mention}") 
-#    else:
-#        await ctx.send(f"You're not an admin {ctx.message.author.mention}")
-
-    # .whoami returns if user is admin
-
 
 @bot.command()
 async def whoami(ctx):
@@ -170,12 +162,14 @@ async def whoami(ctx):
     elif discord.utils.get(ctx.author.roles, name="sudo"):
         await ctx.send(f"{ctx.author.mention} is sudo.")
     else:
-        await ctx.send(f"{ctx.author.mention} is a regular member.")
+        await ctx.send(f"{ctx.author.mention} is user.")
     # .whoami returns if user is admin or mod
 
 @bot.command()
 async def punchme(ctx):
     if ctx.message.author.guild_permissions.administrator:
+        await ctx.send(f"Nah {ctx.message.author.mention}, I can't punch you, you're family")
+    elif discord.utils.get(ctx.author.roles, name="sudo"):
         await ctx.send(f"Nah {ctx.message.author.mention}, I can't punch you, you're family")
     else:
         await ctx.send(":punch:")
