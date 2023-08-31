@@ -153,14 +153,25 @@ async def http(ctx, arg):
         await ctx.send("Invalid HTTP status code")
     # .http <status code> returns http.cat image
     
-@bot.command()
-async def whoami(ctx, *args):
-    if ctx.message.author.guild_permissions.administrator:
-        await ctx.send(f"You're an admin {ctx.message.author.mention}") 
-    else:
-        await ctx.send(f"You're not an admin {ctx.message.author.mention}")
+#@bot.command()
+#async def whoami(ctx, *args):
+#    if ctx.message.author.guild_permissions.administrator:
+#        await ctx.send(f"You're an admin {ctx.message.author.mention}") 
+#    else:
+#        await ctx.send(f"You're not an admin {ctx.message.author.mention}")
 
     # .whoami returns if user is admin
+
+
+@bot.command()
+async def whoami(ctx):
+    if discord.utils.get(ctx.author.roles, name="root"):
+        await ctx.send(f"{ctx.author.mention} is root.")
+    elif discord.utils.get(ctx.author.roles, name="sudo"):
+        await ctx.send(f"{ctx.author.mention} is sudo.")
+    else:
+        await ctx.send(f"{ctx.author.mention} is a regular member.")
+    # .whoami returns if user is admin or mod
 
 @bot.command()
 async def punchme(ctx):
