@@ -37,7 +37,7 @@ async def on_message(message):
     await bot.process_commands(message)
 
     if message.author == bot.user:
-        return
+        pass
     # prevents bot from responding to itself
 
     FC = re.compile("fight\s*club", re.IGNORECASE)
