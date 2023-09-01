@@ -26,6 +26,13 @@ async def on_ready():
 
 
 @bot.event
+async def on_member_join(member):
+    role = discord.utils.get(member.guild.roles, name="user")
+    await member.add_roles(role)
+    # assigns the "User" role to the new member
+
+
+@bot.event
 async def on_message(message):
     await bot.process_commands(message)
 
@@ -161,8 +168,10 @@ async def whoami(ctx):
         await ctx.send(f"{ctx.author.mention} is root.")
     elif discord.utils.get(ctx.author.roles, name="sudo"):
         await ctx.send(f"{ctx.author.mention} is sudo.")
-    else:
+    elif discord.utils.get(ctx.author.roles, name="user"):
         await ctx.send(f"{ctx.author.mention} is user.")
+    else:
+        await ctx.send(f"{ctx.author.mention} is not a member of this server, please see an admin to assign a role.")
     # .whoami returns if user is admin or mod
 
 @bot.command()
