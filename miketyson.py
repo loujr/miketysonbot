@@ -46,10 +46,11 @@ async def on_message(message):
     # responds w/ first rule of fightclub if found in message
 
     LOU = re.compile(r"\blou\b", re.IGNORECASE)
-    if discord.utils.get(message.author.roles, name="root"):
-        pass
     if LOU.search(message.content):
-        await message.reply("That's my boy right there")
+            if discord.utils.get(message.author.roles, name="root"):
+                pass
+            else:
+                await message.reply("That's my boy right there")
     # responds w/ thats my boy right there if lou is found in message
 
     ILUM = re.compile(r"I love you mike", re.IGNORECASE)
