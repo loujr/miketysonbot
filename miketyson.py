@@ -175,19 +175,22 @@ async def whoami(ctx):
     # .whoami returns if user is admin or mod
 
 @bot.command()
-async def punchme(ctx):
+async def punchme(ctx, member: discord.Member, role: discord.Role):
     if ctx.message.author.guild_permissions.administrator:
         await ctx.send(f"Nah {ctx.message.author.mention}, I can't punch you, you're family")
     elif discord.utils.get(ctx.author.roles, name="sudo"):
         await ctx.send(f"Nah {ctx.message.author.mention}, I can't punch you, you're family")
-    else:
+    elif discord.utils.get(ctx.author.roles, name="user"):
         await ctx.send(":punch:")
         await ctx.send(f"{ctx.message.author.mention} has been kicked")
         dmuser = await ctx.message.author.create_dm()
         invite = await ctx.channel.create_invite(max_age=300, max_uses=1, unique=True)
         await dmuser.send("https://giphy.com/gifs/AnXBiWSsDndBu")
         await dmuser.send(invite)
+        await member.remove_roles(role)
         await ctx.message.author.kick()
+    else:
+        raise discord.DiscordException  
     # .punchme
     
 @bot.command()
