@@ -35,7 +35,6 @@ async def on_member_join(member):
 @bot.event
 async def on_message(message):
     await bot.process_commands(message)
-
     if message.author == bot.user:
         pass
     # prevents bot from responding to itself
