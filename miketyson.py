@@ -7,7 +7,7 @@ from discord.ext import commands
 from dotenv import load_dotenv #python-dotenv
 import re  # regex
 import requests
-import asyncio
+import json
 
 
 load_dotenv()
@@ -134,27 +134,25 @@ async def weather(ctx, arg):
     # .weather <location> returns current weather
 
 @bot.command()
-async def ipinfo(ctx):
-    await ctx.send("Please enter an IP address:")
-    try:
-        msg = await bot.wait_for('message', timeout=30.0, check=lambda message: message.author == ctx.author)
-        ip_address = msg.content
-        url = f"https://api.ipgeolocationapi.com/geolocate/{ip_address}"
-        headers = {
-            "x-rapidapi-key": RAPIDAPI_TOKEN,
-            "x-rapidapi-host": "ip-geolocation-ipwhois-io.p.rapidapi.com"
-        }
-        response = requests.get(url, headers=headers)
-        data = response.json()
-        city = data.get("geo").get("city")
-        region = data.get("geo").get("region")
-        country = data.get("geo").get("country_name")
-        org = data.get("isp")
-        ip = data.get("ip")
-        message = f"IP Address: {ip}\nLocation: {city}, {region}, {country}\nOrganization: {org}"
-        await ctx.send(message)
-    except asyncio.TimeoutError:
-        await ctx.send("Sorry, you took too long to respond.")
+async def ipdata(ctx, ip_address):
+    url = "https://ip-whois-geolocation1.p.rapidapi.com/ipwhois"
+    querystring = {"ip": ip_address}
+    headers = {
+        "x-rapidapi-key": RAPIDAPI_TOKEN,
+        "x-rapidapi-host": "ip-whois-geolocation1.p.rapidapi.com"
+    }
+    response = requests.get(url, headers=headers, params=querystring)
+    data = response.json()
+
+    ip = data["request"]["ip"]
+    region = data["location"]["region"]
+    city = data["location"]["city"]
+    name = data["as"]["name"]
+
+    message = f"IP Address: {ip}\nRegion: {region}\nCity: {city}\nName: {name}"
+    await ctx.send(message)
+    # .ipinfo returns ip address info
+
 
 @bot.command(pass_context=True)
 async def http(ctx, arg):
