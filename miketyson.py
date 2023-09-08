@@ -7,6 +7,7 @@ from discord.ext import commands
 from dotenv import load_dotenv #python-dotenv
 import re  # regex
 import requests
+import asyncio
 
 
 load_dotenv()
@@ -80,7 +81,7 @@ async def stonk(ctx, arg):
     name = result["longName"]
     ticker = result["symbol"]
     market_open = result["regularMarketOpen"]
-    current_market_price = result["regularMarketPrice"]
+    current_market_prDhELrX9FjhGbt6ice = result["regularMarketPrice"]
     percent_change = result["regularMarketChangePercent"]
     pretty_percent_change = "{:.2f}%".format(percent_change)
     # market_high = result["regularMarketDayHigh"]
@@ -131,6 +132,29 @@ async def weather(ctx, arg):
     await ctx.send(forcast)
 
     # .weather <location> returns current weather
+
+@bot.command()
+async def ipinfo(ctx):
+    await ctx.send("Please enter an IP address:")
+    try:
+        msg = await bot.wait_for('message', timeout=30.0, check=lambda message: message.author == ctx.author)
+        ip_address = msg.content
+        url = f"https://api.ipgeolocationapi.com/geolocate/{ip_address}"
+        headers = {
+            "x-rapidapi-key": RAPIDAPI_TOKEN,
+            "x-rapidapi-host": "ip-geolocation-ipwhois-io.p.rapidapi.com"
+        }
+        response = requests.get(url, headers=headers)
+        data = response.json()
+        city = data.get("geo").get("city")
+        region = data.get("geo").get("region")
+        country = data.get("geo").get("country_name")
+        org = data.get("isp")
+        ip = data.get("ip")
+        message = f"IP Address: {ip}\nLocation: {city}, {region}, {country}\nOrganization: {org}"
+        await ctx.send(message)
+    except asyncio.TimeoutError:
+        await ctx.send("Sorry, you took too long to respond.")
 
 @bot.command(pass_context=True)
 async def http(ctx, arg):
