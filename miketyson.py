@@ -14,6 +14,7 @@ load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
 GUILD = os.getenv("DISCORD_GUILD")
 RAPIDAPI_TOKEN = os.getenv("RAPIDAPI_TOKEN")
+IPSTACK_TOKEN = os.getenv("IPSTACK_TOKEN")
     # tokens and api keys are stored in .env file
 
 intents = discord.Intents.all()
@@ -135,19 +136,15 @@ async def weather(ctx, arg):
 
 @bot.command()
 async def ipdata(ctx, ip_address):
-    url = "https://ip-whois-geolocation1.p.rapidapi.com/ipwhois"
-    querystring = {"ip": ip_address}
-    headers = {
-        "x-rapidapi-key": RAPIDAPI_TOKEN,
-        "x-rapidapi-host": "ip-whois-geolocation1.p.rapidapi.com"
-    }
-    response = requests.get(url, headers=headers, params=querystring)
+    url = f"http://api.ipstack.com/{ip_address}"
+    querystring = {"access_key": IPSTACK_TOKEN}
+    response = requests.get(url, params=querystring)
     data = response.json()
 
-    ip = data["request"]["ip"]
-    region = data["location"]["region"]
-    city = data["location"]["city"]
-    name = data["as"]["name"]
+    ip = data.get("ip")
+    region = data.get("region_name")
+    city = data.get("city")
+    name = data.get("organization")
 
     message = f"IP Address: {ip}\nRegion: {region}\nCity: {city}\nName: {name}"
     await ctx.send(message)
