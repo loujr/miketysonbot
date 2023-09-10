@@ -135,20 +135,21 @@ async def weather(ctx, arg):
     # .weather <location> returns current weather
 
 @bot.command()
-async def ipdata(ctx, ip_address):
+async def iplocate(ctx, ip_address):
     url = f"http://api.ipstack.com/{ip_address}"
     querystring = {"access_key": IPSTACK_TOKEN}
     response = requests.get(url, params=querystring)
     data = response.json()
-
     ip = data.get("ip")
-    region = data.get("region_name")
+    country = data.get("country_name")
     city = data.get("city")
-    name = data.get("organization")
-
-    message = f"IP Address: {ip}\nRegion: {region}\nCity: {city}\nName: {name}"
+    if country == "United States":
+        state = data.get("region_name")
+        message = f"IP Address: {ip}\nCountry: {country}\nState: {state}\nCity: {city}"
+    else:
+        message = f"IP Address: {ip}\nCountry: {country}\nCity: {city}"
     await ctx.send(message)
-    # .ipinfo returns ip address info
+    # .iplocate returns ip address info
 
 
 @bot.command(pass_context=True)
