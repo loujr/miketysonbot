@@ -82,7 +82,7 @@ async def stonk(ctx, arg):
     name = result["longName"]
     ticker = result["symbol"]
     market_open = result["regularMarketOpen"]
-    current_market_prDhELrX9FjhGbt6ice = result["regularMarketPrice"]
+    current_market_price = result["regularMarketPrice"]
     percent_change = result["regularMarketChangePercent"]
     pretty_percent_change = "{:.2f}%".format(percent_change)
     # market_high = result["regularMarketDayHigh"]
@@ -116,8 +116,22 @@ async def weather(ctx, arg):
     pretty_location = result_location["name"]
     result_condition = data["current"]["condition"]
     
-    w_forcast = result_condition["text"]
-    pretty_w_forcast = w_forcast.lower()
+    
+    place = arg
+    url = "https://weatherapi-com.p.rapidapi.com/current.json"
+    querystring = {"q": place.format(str)}
+    
+    headers = {
+        "x-rapidapi-key": RAPIDAPI_TOKEN,
+        "x-rapidapi-host": "weatherapi-com.p.rapidapi.com"
+        }
+    
+    response = requests.request("GET", url, headers=headers, params=querystring)
+    data = response.json()
+    result_location = data["location"]
+    result_current = data["current"]
+    pretty_location = result_location["name"]
+    result_condition = data["current"]["cretty_w_forcast = w_forcast.lower()
 
     current_tempf = result_current["temp_f"]
     pretty_tempf = "{:.0f} °F".format(current_tempf)  
