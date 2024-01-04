@@ -7,12 +7,14 @@ from discord.ext import commands
 from dotenv import load_dotenv #python-dotenv
 import re  # regex
 import requests
+import json
 
 
 load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
 GUILD = os.getenv("DISCORD_GUILD")
 RAPIDAPI_TOKEN = os.getenv("RAPIDAPI_TOKEN")
+IPSTACK_TOKEN = os.getenv("IPSTACK_TOKEN")
     # tokens and api keys are stored in .env file
 
 intents = discord.Intents.all()
@@ -36,7 +38,7 @@ async def on_member_join(member):
 async def on_message(message):
     await bot.process_commands(message)
     if message.author == bot.user:
-        pass
+        return
     # prevents bot from responding to itself
 
     FC = re.compile("fight\s*club", re.IGNORECASE)
@@ -131,6 +133,24 @@ async def weather(ctx, arg):
     await ctx.send(forcast)
 
     # .weather <location> returns current weather
+
+@bot.command()
+async def iplocate(ctx, ip_address):
+    url = f"http://api.ipstack.com/{ip_address}"
+    querystring = {"access_key": IPSTACK_TOKEN}
+    response = requests.get(url, params=querystring)
+    data = response.json()
+    ip = data.get("ip")
+    country = data.get("country_name")
+    city = data.get("city")
+    if country == "United States":
+        state = data.get("region_name")
+        message = f"IP Address: {ip}\nCountry: {country}\nState: {state}\nCity: {city}"
+    else:
+        message = f"IP Address: {ip}\nCountry: {country}\nCity: {city}"
+    await ctx.send(message)
+    # .iplocate returns ip address info
+
 
 @bot.command(pass_context=True)
 async def http(ctx, arg):
