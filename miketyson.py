@@ -38,7 +38,7 @@ async def on_member_join(member):
 async def on_message(message):
     await bot.process_commands(message)
     if message.author == bot.user:
-        pass
+        return
     # prevents bot from responding to itself
 
     FC = re.compile("fight\s*club", re.IGNORECASE)
