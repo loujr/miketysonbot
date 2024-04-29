@@ -213,6 +213,32 @@ async def punchme(ctx):
         raise discord.DiscordException  
     # .punchme
 
+@bot.command()
+async def shorten(ctx, website: str):
+    # Ensure the website starts with http:// or https://
+    if not website.startswith(('http://', 'https://')):
+        website = 'http://' + website
+
+    # Prepare the data for the POST request
+    data = {"long_url": website}
+
+    # Send the POST request
+    response = requests.post(
+        'https://api.fwd2.app/shorten_url',
+        headers={'Content-Type': 'application/json'},
+        json=data,
+    )
+
+    # Check if the request was successful
+    if response.status_code == 200:
+        # Extract the short URL from the response
+        short_url = response.json()['short_url']
+
+        # Send the short URL in the discord chat
+        await ctx.send(f'The shortened URL is: {short_url}')
+    else:
+        await ctx.send('An error occurred while shortening the URL.')
+
 
 @bot.command()
 async def tableflip(ctx):
