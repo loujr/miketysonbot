@@ -8,7 +8,7 @@ from dotenv import load_dotenv #python-dotenv
 import re  # regex
 import requests
 import json
-
+import random
 
 load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
@@ -103,30 +103,30 @@ async def weather(ctx, arg):
     place = arg
     url = "https://weatherapi-com.p.rapidapi.com/current.json"
     querystring = {"q": place.format(str)}
-    
+
     headers = {
         "x-rapidapi-key": RAPIDAPI_TOKEN,
         "x-rapidapi-host": "weatherapi-com.p.rapidapi.com"
         }
-    
+
     response = requests.request("GET", url, headers=headers, params=querystring)
     data = response.json()
     result_location = data["location"]
     result_current = data["current"]
     pretty_location = result_location["name"]
     result_condition = data["current"]["condition"]
-    
+
     w_forcast = result_condition["text"]
     pretty_w_forcast = w_forcast.lower()
 
     current_tempf = result_current["temp_f"]
-    pretty_tempf = "{:.0f} °F".format(current_tempf)  
+    pretty_tempf = "{:.0f} °F".format(current_tempf)
     # rounds to nearest whole number
     current_tempc = result_current["temp_c"]
-    pretty_tempc = "{:.0f} °C".format(current_tempc)  
+    pretty_tempc = "{:.0f} °C".format(current_tempc)
     # rounds to nearest whole number
 
-    forcast = (f"> The current temperature in {pretty_location} is " 
+    forcast = (f"> The current temperature in {pretty_location} is "
         f"{pretty_tempf} / {pretty_tempc}. The current forcast "
         f"is _{pretty_w_forcast}_, {result_current['humidity'] }% humidity.")
 
@@ -180,7 +180,7 @@ async def http(ctx, arg):
     else:
         await ctx.send("Invalid HTTP status code")
     # .http <status code> returns http.cat image
-    
+
 
 @bot.command()
 async def whoami(ctx):
@@ -210,7 +210,7 @@ async def punchme(ctx):
         await ctx.message.author.edit(roles=[])
         await ctx.message.author.kick()
     else:
-        raise discord.DiscordException  
+        raise discord.DiscordException
     # .punchme
 
 @bot.command()
@@ -260,5 +260,10 @@ async def ping(ctx):
     await ctx.send("pong")
     # .pong
 
+@bot.command()
+async def coinflip(ctx):
+    result = random.choice(["Heads", "Tails"])
+    await ctx.send(f"🪙 It's {result}!")
+    # .coinflip
 
 bot.run(TOKEN)
