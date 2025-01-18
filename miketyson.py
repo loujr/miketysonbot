@@ -262,6 +262,14 @@ async def ping(ctx):
 
 @bot.command()
 async def coinflip(ctx):
+    await ctx.send("Flipping the coin...")
+
+    # Animation
+    for _ in range(3):
+        await ctx.send(random.choice(["Heads", "Tails"]), delete_after=0.5)
+        await asyncio.sleep(0.5)  # Delay between messages
+
+    # Result
     result = random.choice(["Heads", "Tails"])
     await ctx.send(f"🪙 It's {result}!")
     # .coinflip
