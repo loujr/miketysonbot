@@ -9,6 +9,7 @@ import re  # regex
 import requests
 import json
 import random
+import asyncio
 
 load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
